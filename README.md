@@ -199,10 +199,13 @@ See [`requirements.txt`](requirements.txt). Key libraries:
 
 **Path chosen:** Option B — Critique & Rebuild
 
-**AI use:** Claude (Anthropic) was used to assist with structuring the metrics pipeline, debugging FastAPI route handlers, and generating the embedded frontend HTML/CSS/JS. Course corrections were made when initial metric implementations produced incorrect scores for non-Latin scripts (the BERTScore language parameter and the synthetic reference logic required manual fixes after reviewing output).
+**AI use:** Multiple AI/ML models were integrated for translation:
+
+Google Translator (deep-translator) — used as the default fast translation backend for quick document translation.
+MarianMT (Helsinki-NLP/opus-mt-*) — language-pair-specific neural translation models from Hugging Face, used for higher-quality translations on supported language pairs.
+mBART-50 (facebook/mbart-large-50-many-to-many-mmt) — a many-to-many multilingual model supporting 50 languages, used where broader language coverage was needed.
+NLLB-200 (facebook/nllb-200-distilled-600M) — Meta's No Language Left Behind distilled model supporting 200 languages, used for low-resource language translation.
+
+All neural models (MarianMT, mBART-50, NLLB-200) fall back to Google Translator automatically if the model weights cannot be loaded, ensuring the platform remains functional in resource-constrained environments.
 
 ---
-
-## License
-
-MIT
